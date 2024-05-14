@@ -67,6 +67,12 @@ public class SerieService {
         return converteDados(repositorio.findByGenero(categoria));
     }
 
+    public List<EpisodioDTO> obterTopEpisodios(Long id) {
+        return repositorio.obterTop5Episodios(id)
+                .stream()
+                .map(e -> new EpisodioDTO(e.getTemporada(), e.getNumeroEpisodio(), e.getTitulo()))
+                .collect(Collectors.toList());
+    }
 
     // Esse método converteDados() vai receber uma lista de objetos do tipo Serie e transformá-la numa lista de objetos do tipo SerieDTO.
     private List<SerieDTO> converteDados(List<Serie> serie) { // devolve um SerieDTO ao invés da classe Serie (Evita o loop) de uma classe chamando a outra no case das relações "@OneToMany"
